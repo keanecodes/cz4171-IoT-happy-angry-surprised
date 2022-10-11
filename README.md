@@ -7,7 +7,7 @@ Rock, Paper, Scissor - except with facial emotions.
 The browser takes a photo of each of the player's faces, and depending on which emotion is displayed (determined through
 [Cloud Vision API](https://cloud.google.com/vision/)), a player will win, lose or draw.
 
-![Screenshot](screenshot.png)
+https://user-images.githubusercontent.com/22881005/195202950-db5da602-024f-4e21-998c-c3241fad77e8.mp4
 
 The rules are as follows:
 
@@ -50,7 +50,7 @@ on that particular game increase to 10 seconds.
 This means you can have two browser instances running, one with the standard countdown of five seconds, and one
 with ten. This make testing with one computer much easier.
 
-## Presentation Recordings
+## Presentation Recordings of Original Creator (not me)
 You can view the presentation that this demonstration was built around at the following URLs:
 
 - [Google I/O 2016](https://www.youtube.com/watch?v=8wF-mKMsynE)
