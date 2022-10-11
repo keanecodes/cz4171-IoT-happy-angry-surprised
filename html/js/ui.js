@@ -37,7 +37,8 @@ var UI = (function() {
             var chatHeader = document.querySelector("#chat-header");
             var input = document.querySelector("#chat-input");
 
-            messages.style.height = (chat.clientHeight - (chatHeader.clientHeight + input.clientHeight)) + "px";
+            // messages.style.height = (chat.clientHeight - (chatHeader.clientHeight + input.clientHeight)) + "px";
+            messages.style.height = (chat.clientHeight -  input.clientHeight) + "px";
 
             //manage image height
             var images = document.querySelectorAll("#game .face");
@@ -61,8 +62,11 @@ var UI = (function() {
          * */
         init: function() {
             // help dialog
-            document.querySelector("#help").addEventListener("click", function() {
-                document.querySelector('#help-dialog').showModal();
+            // document.querySelector("#help").addEventListener("click", function() {
+            //     document.querySelector('#help-dialog').showModal();
+            // });
+            document.querySelector('.mdl-menu').addEventListener('click', function(event) {
+                event.stopPropagation();
             });
 
             // play again dialog

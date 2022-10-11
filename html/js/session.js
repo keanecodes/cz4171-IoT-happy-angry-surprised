@@ -37,7 +37,8 @@ var Session = (function() {
             loggedIn = true;
             closeLoginDialog();
             document.querySelector("#login").style.display = "none";
-            document.querySelector("#logout").style.display = "block";
+            document.querySelector("#header-chat").style.display = "block";
+            document.querySelector("#header-more").style.display = "block";
 
             Chat.onlogin();
             Game.onlogin();
@@ -88,6 +89,7 @@ var Session = (function() {
      * */
     function closeLoginDialog() {
         var dialog = document.querySelector("#login-dialog");
+        dialogPolyfill.registerDialog(dialog);
         if (dialog.open) {
             dialog.close();
         }
@@ -129,6 +131,7 @@ var Session = (function() {
          * */
         init: function() {
             loginDialog = document.querySelector("#login-dialog");
+            dialogPolyfill.registerDialog(loginDialog)
 
             firebase.auth().onAuthStateChanged(authStateChangeListener);
 

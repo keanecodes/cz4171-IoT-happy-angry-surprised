@@ -18,7 +18,7 @@
 /**
  * This is just a place to put all your API authentication keys
  */
-Config = function() {
+ Config = function() {
     return {
         // You will need to replace with your own Firebase configuration
         // This can be retrieved from clicking "Add App" from the project overview page.

@@ -34,6 +34,7 @@ var Game = (function() {
 
     //ui elements
     var create;
+    var gameOpen;
     var gameList;
     var cam;
     var dialog;
@@ -88,6 +89,7 @@ var Game = (function() {
                 console.log("I created a game!", key);
                 //drop this game, if I disconnect
                 key.onDisconnect().remove();
+                document.querySelector('#help-dialog').style.display = 'none';
                 gameList.style.display = "none";
                 watchGame(key.key);
             }
@@ -112,8 +114,10 @@ var Game = (function() {
             return game;
         }, function(error, committed, snapshot) {
             if (committed) {
+                document.querySelector('#help-dialog').style.display = 'none';
                 if (snapshot.val().joiner.uid == user.uid) {
                     enableCreateGame(false);
+                    gameOpen.style.display = 'none';
                     watchGame(key);
                 } else {
                     UI.snackbar({message: "Game already joined. Please choose another."});
@@ -131,6 +135,7 @@ var Game = (function() {
      * */
     function joinedGame(game, gameRef) {
         if (game.creator.uid == firebase.auth().currentUser.uid) {
+            gameOpen.style.display = 'none';
             UI.snackbar({message: game.joiner.displayName + " has joined your game."});
             //wait a little bit
             window.setTimeout(function() {
@@ -225,7 +230,7 @@ var Game = (function() {
                     setTimeout(f, 1000);
                 } else {
                     console.log("Taking picture!");
-                    title.innerText = "CHEESE!";
+                    title.innerText = "📸 📸 📸";
                     cam.pause();
                     takePicture(gameRef, game);
                     document.querySelector("#cam-progress").style.display = "block";
@@ -257,6 +262,7 @@ var Game = (function() {
      * */
     function getVisionEmotion(visionResult) {
         if (!visionResult.responses || visionResult.responses.length != 1 || visionResult.responses[0].error) {
+            console.log(visionResult)
             console.log("Error in vision result:", visionResult);
             UI.snackbar({message: "Error getting Vision API Result"});
             return
@@ -393,13 +399,13 @@ var Game = (function() {
         var result = document.querySelector("#result");
         var resultTitle = result.querySelector(".mdl-dialog__title");
 
-        if (result.open) {
+        if (result.style.display == 'block') {
             return;
         }
 
         if (game.creator.wins == game.joiner.wins) {
-            resultTitle.innerText = "It was a DRAW! 😒";
-            result.showModal();
+            resultTitle.innerText = "Tie. Great minds think alike 🧠";
+            result.style.display = 'block';
             return;
         }
 
@@ -409,12 +415,12 @@ var Game = (function() {
         }
 
         if (player.wins) {
-            resultTitle.innerText = "YOU WON! 😃";
+            resultTitle.innerText = "Won ✨✨ Looking Great!";
         } else {
-            resultTitle.innerHTML = "Sorry.<br/>You lost. 😢"
+            resultTitle.innerHTML = "Lost 🤡 Try Makeup?"
         }
 
-        result.showModal();
+        result.style.display = 'block';
     }
 
     /*
@@ -466,9 +472,11 @@ var Game = (function() {
             create = document.querySelector("#create-game");
             create.addEventListener("click", createGame);
 
+            gameOpen = document.querySelector("#games");
             gameList = document.querySelector("#games ul");
             cam = document.querySelector("#cam");
             dialog = document.querySelector("#game-cam");
+            dialogPolyfill.registerDialog(dialog);
 
             ref = firebase.database().ref("/games");
 
